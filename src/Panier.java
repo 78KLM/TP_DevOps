@@ -1,3 +1,6 @@
+import java.util.ArrayList;
+import java.util.List;
+
 public class Panier {
     private List<LigneCommande> lignes = new ArrayList<>();
     private String codeReduction = null;
