@@ -84,4 +84,59 @@ class PanierTest {
         Panier panier = new Panier();
         assertThrows(IllegalArgumentException.class, () -> panier.appliquerCodeReduction(null));
     }
+
+    @Test
+    void articleOfferDoitEtreAccepteEtNePasCompterDansLeTotal() {
+        Panier panier = new Panier();
+        Article articleGratuit = new Article("OFFERT-01", "Stylo offert", 0.0);
+        panier.ajouterArticle(articleGratuit, 1);
+        assertEquals(0.0, panier.calculerTotal(), 0.001);
+    }
+
+    @Test
+    void quantiteUneDoitEtreAcceptee() {
+        Panier panier = new Panier();
+        Article article = new Article("REF-001", "Livre", 9.99);
+        panier.ajouterArticle(article, 1);
+        assertEquals(9.99, panier.calculerTotal(), 0.001);
+    }
+
+    @Test
+    void articleGratuitDoitEtreAccepte() {
+        Panier panier = new Panier();
+        Article articleGratuit = new Article("REF-FREE", "Cadeau", 0.0);
+        panier.ajouterArticle(articleGratuit, 1);
+        assertEquals(0.0, panier.calculerTotal(), 0.001);
+    }
+
+    @Test
+    void prixEleveDoitFonctionner() {
+        Panier panier = new Panier();
+        Article articleLuxe = new Article("REF-LUXE", "Ordinateur", 999.99);
+        panier.ajouterArticle(articleLuxe, 1);
+        assertEquals(999.99, panier.calculerTotal(), 0.001);
+    }
+
+    @Test
+    void panierAvecUnSeulArticleDoitFonctionner() {
+        Panier panier = new Panier();
+        Article article = new Article("REF-001", "Stylo", 1.50);
+        panier.ajouterArticle(article, 1);
+        assertEquals(1, panier.nombreArticles());
+    }
+
+    @Test
+    void plusieursArticlesDifferentsDansPanier() {
+        Panier panier = new Panier();
+        Article article1 = new Article("REF-1", "Gomme", 2.0);
+        Article article2 = new Article("REF-2", "Crayon", 1.5);
+        Article article3 = new Article("REF-3", "Règle", 3.0);
+
+        panier.ajouterArticle(article1, 2); // 4.0
+        panier.ajouterArticle(article2, 1); // 1.5
+        panier.ajouterArticle(article3, 3); // 9.0
+
+        // Total = 4.0 + 1.5 + 9.0 = 14.5
+        assertEquals(14.5, panier.calculerTotal(), 0.001);
+    }
 }
