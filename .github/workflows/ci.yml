@@ -47,5 +47,5 @@ jobs:
         with:
           push: true
           tags: |
-            ghcr.io/${{ github.repository }}:latest
-            ghcr.io/${{ github.repository }}:${{ github.sha }}
+            ghcr.io/78klm/tp_devops:latest
+            ghcr.io/78klm/tp_devops:${{ github.sha }}
